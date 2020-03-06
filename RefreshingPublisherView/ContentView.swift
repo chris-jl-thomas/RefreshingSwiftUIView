@@ -20,7 +20,7 @@ struct ContentView: View {
                 data.value.map(Text.init)
             }
                 .tabItem { Text("One") }
-                .modifier(ContentLoader<Just<String>>(dataLoader: data))
+                .modifier(ContentLoader(dataLoader: data))
             Text("data.date.description")
                 .tabItem { Text("Two") }
         }
