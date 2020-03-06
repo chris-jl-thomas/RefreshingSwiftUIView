@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,7 +13,6 @@
 		50107D8F2406B5D400765A87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50107D8E2406B5D400765A87 /* Assets.xcassets */; };
 		50107D922406B5D500765A87 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50107D912406B5D400765A87 /* Preview Assets.xcassets */; };
 		50107D952406B5D500765A87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50107D932406B5D500765A87 /* LaunchScreen.storyboard */; };
-		50107D9E2406B65F00765A87 /* PublisherView in Frameworks */ = {isa = PBXBuildFile; productRef = 50107D9D2406B65F00765A87 /* PublisherView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +31,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50107D9E2406B65F00765A87 /* PublisherView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,7 +92,6 @@
 			);
 			name = RefreshingPublisherView;
 			packageProductDependencies = (
-				50107D9D2406B65F00765A87 /* PublisherView */,
 			);
 			productName = RefreshingPublisherView;
 			productReference = 50107D852406B5D200765A87 /* RefreshingPublisherView.app */;
@@ -125,7 +122,6 @@
 			);
 			mainGroup = 50107D7C2406B5D200765A87;
 			packageReferences = (
-				50107D9C2406B65F00765A87 /* XCRemoteSwiftPackageReference "PublisherView" */,
 			);
 			productRefGroup = 50107D862406B5D200765A87 /* Products */;
 			projectDirPath = "";
@@ -350,25 +346,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		50107D9C2406B65F00765A87 /* XCRemoteSwiftPackageReference "PublisherView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielctull/PublisherView";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		50107D9D2406B65F00765A87 /* PublisherView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 50107D9C2406B65F00765A87 /* XCRemoteSwiftPackageReference "PublisherView" */;
-			productName = PublisherView;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 50107D7D2406B5D200765A87 /* Project object */;
 }

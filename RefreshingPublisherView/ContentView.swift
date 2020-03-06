@@ -8,11 +8,10 @@
 
 import Combine
 import SwiftUI
-import PublisherView
 
 struct ContentView: View {
     
-    @EnvironmentObject var data: DataObject<Just<String>>
+    @ObservedObject var data = DataObject(publisher: Just("success"))
     
     var body: some View {
         TabView {
@@ -20,10 +19,9 @@ struct ContentView: View {
                 Text(data.date.description)
                 data.value.map(Text.init)
             }
-            .tabItem { Text("One") }
-            .modifier(ContentLoader<DataObject<Just<String>>>())
-//            .reloadable<DataObject<Just<String>>>()
-            Text(data.date.description)
+                .tabItem { Text("One") }
+                .modifier(ContentLoader<Just<String>>(dataLoader: data))
+            Text("data.date.description")
                 .tabItem { Text("Two") }
         }
     }
@@ -35,12 +33,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-protocol Loader: ObservableObject {
-    func reload(refreshTime: TimeInterval)
-    func cancel()
-}
-
-class DataObject<Publisher>: Loader where Publisher: Combine.Publisher {
+class DataObject<Publisher>: ObservableObject where Publisher: Combine.Publisher {
     
     public typealias Output = Publisher.Output
     public typealias Failure = Publisher.Failure
@@ -51,12 +44,20 @@ class DataObject<Publisher>: Loader where Publisher: Combine.Publisher {
     @Published var date: Date = Date()
     @Published var value: Output?
     @Published var error: Failure?
-    @Published var loading: Bool = true
+    
+    @Published var loading: Bool = false {
+        didSet {
+            if oldValue == false && loading == true {
+                self.reload(refreshTime: 0)
+            }
+        }
+    }
     
     var subscription: AnyCancellable?
     
     init(publisher: Publisher) {
         self.publisher = publisher
+        reload(refreshTime: -1)
     }
     
     func reload(refreshTime: TimeInterval) {
@@ -88,11 +89,13 @@ class DataObject<Publisher>: Loader where Publisher: Combine.Publisher {
     }
 }
 
-struct ContentLoader<DataLoader>: ViewModifier where DataLoader: Loader {
+struct ContentLoader<Publisher>: ViewModifier where Publisher: Combine.Publisher {
+    
+    @ObservedObject var dataLoader: DataObject<Publisher>
     
     struct ContentView: View {
         
-        @EnvironmentObject var dataLoader: DataLoader
+        @ObservedObject var dataLoader: DataObject<Publisher>
         let content: Content
         
         var body: some View {
@@ -107,14 +110,14 @@ struct ContentLoader<DataLoader>: ViewModifier where DataLoader: Loader {
     }
     
     func body(content: Content) -> some View {
-        ContentView(content: content)
+        ContentView(dataLoader: dataLoader, content: content)
     }
     
     
 }
-
-extension View {
-    func reloadable<DataObject>() -> some View where DataObject: Loader {
-        modifier(ContentLoader<DataObject>())
-    }
-}
+//
+//extension View {
+//    func reloadable() -> some View {
+//        modifier(ContentLoader())
+//    }
+//}
